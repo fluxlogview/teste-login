@@ -38,8 +38,9 @@ if (userForm) {
     const newPass = document.getElementById('new-pass').value.trim();
     const msg = document.getElementById('msg');
     if (newUser && newPass) {
-      msg.textContent = `Usuário cadastrado: ${newUser} (senha simples — implemente hash para produção)`;
+      msg.textContent = `Usuário cadastrado: ${newUser}`;
       msg.style.color = 'blue';
+      alert('Cadastro OK: ' + newUser);
       console.log('Novo usuário registrado:', newUser);
     } else {
       msg.textContent = 'Preencha usuário e senha';
