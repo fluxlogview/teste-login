@@ -14,11 +14,9 @@ if (loginForm) {
     if (user === DEMO_USER && pass === DEMO_PASS) {
       msg.textContent = 'Login realizado com sucesso!';
       msg.style.color = 'green';
-      alert('Login OK: ' + user);
     } else {
       msg.textContent = 'Usuário ou senha inválidos (tente: admin / senha)';
       msg.style.color = 'red';
-      alert('Login falhou');
     }
   });
 }
@@ -40,7 +38,6 @@ if (userForm) {
     if (newUser && newPass) {
       msg.textContent = `Usuário cadastrado: ${newUser}`;
       msg.style.color = 'blue';
-      alert('Cadastro OK: ' + newUser);
       console.log('Novo usuário registrado:', newUser);
     } else {
       msg.textContent = 'Preencha usuário e senha';
