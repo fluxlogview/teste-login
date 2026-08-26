@@ -8,7 +8,7 @@ console.log('script.js carregado. Usando SQLite local.');
 
 // Login — valida contra banco SQLite
 const loginForm = document.getElementById('login-form');
-if (loginForm) {
+  if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const user = document.getElementById('username').value.trim();
@@ -16,7 +16,11 @@ if (loginForm) {
     const msg = document.getElementById('msg');
 
     try {
-      await new Promise(r => sqlScript.addEventListener('load', r));
+      if (sqlScript.readyState === 'complete') {
+        // sql.js ja carregado
+      } else {
+        await new Promise(r => sqlScript.addEventListener('load', r));
+      }
       const SQL = await initSqlJs();
       const db = new SQL.Database();
       try {
@@ -73,7 +77,11 @@ if (userForm) {
       return;
     }
     try {
-      await new Promise(r => sqlScript.addEventListener('load', r));
+      if (sqlScript.readyState === 'complete') {
+        // sql.js ja carregado
+      } else {
+        await new Promise(r => sqlScript.addEventListener('load', r));
+      }
       const SQL = await initSqlJs();
       const db = new SQL.Database();
       db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password_hash TEXT)");
