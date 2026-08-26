@@ -18,6 +18,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   if (user === DEMO_USER && pass === DEMO_PASS) {
     msg.textContent = 'Login realizado com sucesso!';
     msg.style.color = 'green';
+    alert('Login OK: ' + user);
   } else {
     msg.textContent = 'Usuário ou senha inválidos (tente: admin / senha)';
     msg.style.color = 'red';
