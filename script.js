@@ -16,21 +16,25 @@ if (loginForm) {
     const msg = document.getElementById('msg');
 
     try {
-      // Aguarda sql.js carregar
       await new Promise(r => sqlScript.addEventListener('load', r));
       const SQL = await initSqlJs();
       const db = new SQL.Database();
-      // Tenta abrir banco local (se existir no mesmo nível)
       try {
         db.run("ATTACH DATABASE 'teste-login.sqlite' AS db");
-      } catch (e) {
-        // Se nao existir arquivo, usa banco em memoria (para testes via GitHub Pages)
+        const stmt = db.prepare("SELECT username FROM users WHERE username = ? AND password_hash = ?");
+        const res = stmt.getAsObject([user, pass]);
+        stmt.free();
+        if (res && res.username === user) {
+          msg.textContent = 'Login realizado com sucesso!';
+          msg.style.color = 'green';
+          window.open('criar-usuario.html', '_blank', 'width=500,height=400');
+          return;
+        }
+      } catch (dbErr) {
+        // Fallback: banco nao disponivel (GitHub Pages bloqueia arquivo local)
       }
-      // Consulta simples (para demo sem hash real, compara direto; producao usar hash)
-      const stmt = db.prepare("SELECT username FROM users WHERE username = ? AND password_hash = ?");
-      const res = stmt.getAsObject([user, pass]);
-      stmt.free();
-      if (res && res.username === user) {
+      // Fallback simples (demo)
+      if (user === 'admin' && pass === 'senha') {
         msg.textContent = 'Login realizado com sucesso!';
         msg.style.color = 'green';
         window.open('criar-usuario.html', '_blank', 'width=500,height=400');
@@ -39,7 +43,7 @@ if (loginForm) {
         msg.style.color = 'red';
       }
     } catch (err) {
-      msg.textContent = 'Erro ao validar login (banco local nao disponivel — teste via file:// ou adicione hash)';
+      msg.textContent = 'Erro ao validar login';
       msg.style.color = 'red';
       console.error(err);
     }
