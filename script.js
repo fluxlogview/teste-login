@@ -1,29 +1,33 @@
-// script.js — Login básico com SQLite local (sql.js CDN)
-
-const sqlScript = document.createElement('script');
-sqlScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js';
-document.head.appendChild(sqlScript);
-
-console.log('script.js carregado. Login simples: admin / senha');
+// script.js — Login básico com SQLite local (sql.js CDN, carregado em paralelo)
 
 const DEMO_USER = 'admin';
 const DEMO_PASS = 'senha';
 
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const user = document.getElementById('username').value.trim();
-  const pass = document.getElementById('password').value.trim();
-  const msg = document.getElementById('msg');
+// Validação de login (independente do sql.js)
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value.trim();
+    const msg = document.getElementById('msg');
+    if (user === DEMO_USER && pass === DEMO_PASS) {
+      msg.textContent = 'Login realizado com sucesso!';
+      msg.style.color = 'green';
+      alert('Login OK: ' + user);
+    } else {
+      msg.textContent = 'Usuário ou senha inválidos (tente: admin / senha)';
+      msg.style.color = 'red';
+      alert('Login falhou');
+    }
+  });
+}
 
-  if (user === DEMO_USER && pass === DEMO_PASS) {
-    msg.textContent = 'Login realizado com sucesso!';
-    msg.style.color = 'green';
-    alert('Login OK: ' + user);
-  } else {
-    msg.textContent = 'Usuário ou senha inválidos (tente: admin / senha)';
-    msg.style.color = 'red';
-  }
-});
+// Carrega sql.js via CDN (não bloqueia o login)
+const sqlScript = document.createElement('script');
+sqlScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js';
+document.head.appendChild(sqlScript);
+console.log('script.js carregado. Login simples: admin / senha');
 
 // Sistema de criação de usuários
 const userForm = document.getElementById('user-form');
