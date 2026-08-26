@@ -14,7 +14,7 @@ if (loginForm) {
     if (user === DEMO_USER && pass === DEMO_PASS) {
       msg.textContent = 'Login realizado com sucesso!';
       msg.style.color = 'green';
-      window.open('criar-usuario.html', '_blank');
+      window.open('criar-usuario.html', '_blank', 'width=500,height=400');
     } else {
       msg.textContent = 'Usuário ou senha inválidos (tente: admin / senha)';
       msg.style.color = 'red';
