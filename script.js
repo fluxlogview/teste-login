@@ -31,7 +31,7 @@ const loginForm = document.getElementById('login-form');
         if (res && res.username === user) {
           msg.textContent = 'Login realizado com sucesso!';
           msg.style.color = 'green';
-          window.open('criar-usuario.html', '_blank', 'width=500,height=400');
+          window.location.href = 'criar-usuario.html';
           return;
         }
       } catch (dbErr) {
